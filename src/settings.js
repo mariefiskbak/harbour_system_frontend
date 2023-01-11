@@ -1,2 +1,2 @@
-const BASE_URL = "https://altantthewired.me/tomcat/quickstart/api"
+const BASE_URL = "https://datmarie.dk/tomcat/harbour_system/api"
 export default BASE_URL

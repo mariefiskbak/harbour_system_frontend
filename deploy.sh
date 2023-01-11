@@ -6,7 +6,7 @@
 
 # PROJECT_NAME="Name or your frontend project, for example movie --> folder you created under /var/www/public"
 # DROPLET_URL="URL for your droplet"
-PROJECT_NAME="ca2"
+PROJECT_NAME="harbour_system"
 DROPLET_URL='164.92.142.155'
 
 echo "##############################"

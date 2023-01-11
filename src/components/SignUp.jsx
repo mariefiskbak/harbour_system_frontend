@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import facade from "../apiFacade.js";
 
-function SignUp({setLoggedIn}) {
+function SignUp({setIsLoggedIn}) {
     const init = {username: "", password: "", rPassword: ""};
     const [signUpInfo, setSignUpInfo] = useState(init);
 
@@ -12,7 +12,7 @@ function SignUp({setLoggedIn}) {
 
             facade.createUser(signUpInfo.username, signUpInfo.password, signUpInfo.rPassword)
                 .then(() => {
-                    facade.login(signUpInfo.username, signUpInfo.password).then(() => setLoggedIn(true));
+                    facade.login(signUpInfo.username, signUpInfo.password).then(() => setIsLoggedIn(true));
                     setSignUpInfo({username: "", password: "", rPassword: ""})
                 })
                 .catch(err => {

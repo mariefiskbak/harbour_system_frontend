@@ -54,10 +54,41 @@ function apiFacade() {
         .then(handleHttpErrors)
   }
 
-  const fetchData = () => {
-    const opts = makeOptions("GET", true)
-    return fetch(BASE_URL + "/info/user", opts).then(handleHttpErrors)
+  const handleHttpErrors = (res) => {
+    if(!res.ok) {
+      return Promise.reject({status: res.status, fullError: res.json()})
+    }
+    return res.json()
   }
+
+  const handleErrors = (err, setErrorMessage) => {
+    if(err.status) {
+      err.fullError.then(e => {
+        console.error(e.message)
+        if (setErrorMessage) {
+          setErrorMessage(err.code + ": " + err.message)
+        }
+      })
+    } else {
+      console.log("Network Error")
+      console.error(err)
+    }
+  }
+
+  const fetchData = async (endpoint, updateAction, method, body, setErrorMessage) => {
+    const opts = makeOptions(method, true, body)
+    try {
+      const res = await fetch(BASE_URL + endpoint, opts)
+      const data = await handleHttpErrors(res)
+      return updateAction(data)
+    } catch(err) {
+      handleErrors(err, setErrorMessage)
+    }
+  }
+  // const fetchData = () => {
+  //   const opts = makeOptions("GET", true)
+  //   return fetch(BASE_URL + "/info/user", opts).then(handleHttpErrors)
+  // }
   const makeOptions= (method, addToken, body) => {
     const opts = {
       method: method,

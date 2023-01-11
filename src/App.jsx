@@ -7,10 +7,11 @@ import facade from "./apiFacade";
 import Header from "./components/Header.jsx";
 import SignUp from "./components/SignUp.jsx";
 import Pokemon from "./pages/Pokemon.jsx";
+import Harbour from "./pages/Harbour.jsx";
 
 function App() {
 
-  const [loggedIn, setLoggedIn] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   const obj = {
     name: "TestName",
@@ -21,12 +22,13 @@ function App() {
 
   return (
       <>
-        <Header setLoggedIn={setLoggedIn} loggedIn={loggedIn}/>
+        <Header setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn}/>
         <Routes>
           <Route path="" element={<Home/>}/>
           <Route path="/search" element={<Search/>}/>
           <Route path="/contact" element={<Contact address={obj}/>}/>
-          <Route path="/signup" element={<SignUp setLoggedIn={setLoggedIn}/>}/>
+          <Route path="/signup" element={<SignUp setIsLoggedIn={setIsLoggedIn}/>}/>
+          <Route path="/harbour/*" element={<Harbour isLoggedIn={{isLoggedIn}}/>}/>
           <Route path="/pokemon" element={<Pokemon/>}/>
           <Route path="*" element={<h1>Page Not Found !!!!</h1>}/>
         </Routes>
