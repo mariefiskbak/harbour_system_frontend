@@ -4,12 +4,14 @@ import facade from '../apiFacade.js'
 function Harbour({isLoggedIn}) {
 
     const [owners, setOwners] = useState([])
-    const [harbourNames, setHarbourNames] = useState('');
+    const [chosenHarbour, setChosenHarbour] = useState("1");
     const [harbours, setHarbours] = useState([])
+    const [boats, setBoats] = useState([])
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log('Form submitted! Input value:', harbourNames);
+        console.log('Form submitted! Input value:', chosenHarbour);
+        facade.fetchData(`/info/harbour/boats/${chosenHarbour}`, setBoats, "GET")
     };
 
     useEffect(() => {
@@ -35,17 +37,19 @@ function Harbour({isLoggedIn}) {
                         })}
                     </div>
                     <br/><br/>
+
+
                     <div>
                         <h3>All boats belonging in a specific harbour</h3>
                         <form onSubmit={handleSubmit} formAction="/submit">
                             <label>
                                 Harbour Name:
                                 <select
-                                    value={harbourNames}
-                                    onChange={(event) => setHarbourNames(event.target.value)}
+                                    value={chosenHarbour}
+                                    onChange={(event) => setChosenHarbour(event.target.value)}
                                 >
                                     {harbours.map((option) => (
-                                        <option key={option.name} value={option.name}>
+                                        <option key={option.name} value={option.id}>
                                             {option.name}
                                         </option>
                                     ))}
@@ -54,7 +58,17 @@ function Harbour({isLoggedIn}) {
                             <br />
                             <button type="submit">Submit</button>
                         </form>
+
+                        {boats.map(boat => {
+                            return (
+                                <li key={boat.name}>{boat.name}</li>
+                            )
+                        })}
+                        
+
                     </div>
+
+
 
                 </div>
 
